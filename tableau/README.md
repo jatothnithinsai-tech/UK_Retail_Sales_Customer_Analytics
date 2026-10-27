@@ -1,7 +1,12 @@
 # Tableau dashboard
 
-This folder contains the Tableau Public assets for the UK Retail Sales &
-Customer Analytics portfolio project.
+This folder contains the editable Tableau workbook and genuine dashboard export for the UK Retail Sales & Customer Analytics portfolio project.
+
+![Actual Tableau retail sales dashboard](exports/uk_retail_sales_customers_analytics_dashboard.png)
+
+[Open the workbook](workbook/uk_retail_sales_customer_analytics_dashboard.twb) · [Read the project and metric caveats](../README.md)
+
+The saved image shows 40,077 orders; the retained Python notebook records 40,079. A fresh source-to-Tableau reconciliation remains necessary. This review preserved the original workbook and image.
 
 ## Structure
 
@@ -17,7 +22,7 @@ Use either:
 
 The MySQL connection is preferred for demonstrating SQL and database skills.
 
-## Recommended worksheets
+## Dashboard analysis areas
 
 - KPI summary
 - Monthly revenue trend
@@ -28,7 +33,7 @@ The MySQL connection is preferred for demonstrating SQL and database skills.
 - Customer purchase frequency
 - Cancellation and return analysis
 
-## Recommended dashboard layout
+## Review sequence
 
 1. Executive KPI header
 2. Revenue trend and time filters
@@ -38,3 +43,5 @@ The MySQL connection is preferred for demonstrating SQL and database skills.
 
 Tableau Public content is publicly accessible. This project uses a public UCI
 dataset and must not include passwords, connection credentials, or private data.
+
+The repository includes a TWB connection definition, not a packaged extract. Update its source connection before refreshing; viewing the PNG requires no Tableau account. No public interactive Tableau URL is supplied.

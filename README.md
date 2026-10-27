@@ -1,184 +1,95 @@
 # UK Retail Sales & Customer Analytics
 
-An end-to-end portfolio project analyzing more than one million transactions
-from a UK-based online retailer. The project uses Python for controlled data
-profiling and cleaning, MySQL for business analysis, and Tableau for executive
-reporting.
+**Python · MySQL · Tableau | Historical retail performance from source workbook to executive dashboard**
 
-![UK Retail Sales & Customer Analytics dashboard](images/uk_retail_sales_customers_analytics_dashboard.png)
+This project investigates sales trends, customer concentration, product performance and cancellations using UCI Online Retail II. It connects profiling and cleaning notebooks to SQL analysis and an editable Tableau workbook.
 
-## Project summary
+![Actual Tableau dashboard showing UK retail revenue, orders, customers, products and geography](images/uk_retail_sales_customers_analytics_dashboard.png)
 
-| Area | Result |
+*Actual saved dashboard export. It shows 40,077 orders; the executed Python notebook records 40,079. This two-order difference remains unreconciled and is disclosed below.*
+
+**Explore:** [executed EDA notebook](python/notebooks/03_exploratory_data_analysis.ipynb) · [SQL analyses](sql/03_analysis/) · [Tableau workbook](tableau/workbook/uk_retail_sales_customer_analytics_dashboard.twb) · [business summary](docs/architecture/project_summary.md)
+
+## Business questions
+
+- How do revenue and purchasing patterns vary over time?
+- Which countries, products and customers account for the most sales?
+- What do cancellation records and missing customer identifiers mean for interpretation?
+- Where should a commercial team investigate seasonal capacity, availability and retention?
+
+## Recorded analytical results
+
+| Metric | Python notebook / documented result |
 |---|---:|
-| Transactions analyzed | 1,029,609 |
-| Total revenue | £20.91M |
+| Raw transaction rows | 1,067,371 |
+| Retained analytical rows | 1,029,609 |
+| Reported sales revenue | £20,913,891.47 |
 | Orders | 40,079 |
-| Customers | 5,878 |
-| Units sold | 11.39M |
+| Identified customers | 5,878 |
+| Units sold | 11,385,368 |
 | Average order value | £521.82 |
 | Cancelled orders | 8,292 |
-| Cancellation rate | 17.14% |
+| Reported order cancellation rate | 17.14% |
 
-## Business problem
+The figures above describe existing notebook outputs, not a newly executed full-data reconciliation. Revenue, sales and cancellation populations must be interpreted using the [data dictionary](docs/data_dictionary/data_dictionary.md) and [SQL KPI definitions](sql/03_analysis/01_kpi_analysis.sql).
 
-Management needs a reliable view of sales performance, customer behavior,
-product performance, geographic contribution, purchasing patterns, and
-cancellations. This project turns the raw transaction workbook into validated
-datasets, reproducible analysis, and an interactive decision-support dashboard.
+## Findings and potential decisions
 
-The analysis answers:
+- The documented analysis finds **November strongest in both complete calendar years**. Investigate stock availability and fulfilment capacity ahead of the year-end peak. The dashboard's month-name view pools years; use year-month analysis for chronological comparisons.
+- The UK contributes approximately **£17.81M**, indicating geographic concentration. Compare international markets using comparable customer coverage and order definitions.
+- Product rankings include operational labels such as **Manual** and **POSTAGE**. Separate merchandise from adjustments before using rankings for stock decisions.
+- The documented **17.14% cancellation rate** motivates a review by product, customer and month; it is not evidence that a proposed intervention has improved performance.
+- Missing customer identifiers limit customer-level segmentation and retention. Do not equate identified-customer coverage with the full transaction population.
 
-- How much revenue did the business generate, and how did it change over time?
-- Which products, customers, and countries contributed the most revenue?
-- What are the strongest months, weekdays, and purchasing hours?
-- How frequently do customers purchase?
-- How significant are cancellations and returns?
-- Which findings can support sales growth and customer retention?
-
-## Key findings
-
-- Revenue reached **£20.91M** across **40,079 orders**.
-- November was the strongest month in both full calendar years, suggesting a
-  pronounced year-end seasonal peak.
-- The United Kingdom generated approximately **£17.81M**, making it the dominant
-  market by a wide margin.
-- `REGENCY CAKESTAND 3 TIER` was the highest-revenue named product in the
-  product summary.
-- The **17.14% cancellation rate** warrants monitoring by product, customer,
-  and time period.
-- Missing customer identifiers limit customer-level analysis for part of the
-  transaction history, while aggregate sales reporting remains usable.
-
-## Analytics workflow
+## Workflow and implementation
 
 ```mermaid
 flowchart LR
-    A[UCI raw Excel workbook] --> B[Python profiling]
-    B --> C[Python cleaning]
-    C --> D[Processed CSV files]
-    D --> E[(MySQL)]
-    E --> F[SQL validation and analysis]
-    F --> G[Tableau dashboard]
-    G --> H[Business recommendations]
+    A[UCI Excel workbook] --> B[Python profiling and cleaning notebooks]
+    B --> C[Curated CSV outputs]
+    C --> D[(MySQL)]
+    D --> E[Validation queries and reporting views]
+    E --> F[Tableau workbook and dashboard]
 ```
 
-## SQL pipeline
+| Location | Evidence |
+|---|---|
+| [python/notebooks/](python/notebooks/) | Profiling, cleaning and EDA notebooks with retained outputs |
+| [python/scripts/](python/scripts/) | Cleaning and MySQL loading helpers |
+| [sql/01_schema/](sql/01_schema/) | Database and table definitions |
+| [sql/02_cleaning/](sql/02_cleaning/) | SQL validation |
+| [sql/03_analysis/](sql/03_analysis/) | KPI, monthly, product, customer, country and time analysis |
+| [sql/04_views/](sql/04_views/) | Reporting views |
+| [tableau/](tableau/) | Editable TWB and dashboard export |
+| [docs/](docs/) | Requirements, data dictionary, architecture and business summary |
 
-```mermaid
-flowchart LR
-    A["01_schema<br/>Create database and sales_clean"] --> B["02_cleaning<br/>Validate rows, nulls, duplicates, returns"]
-    B --> C["03_analysis<br/>KPIs, monthly, product, customer, country, time"]
-    C --> D["04_views<br/>Sales, monthly, customer, product summaries"]
-    D --> E["Tableau<br/>Dashboard and portfolio export"]
-```
+## Reproduce or review
 
-The SQL layer is organized in execution order. Validation queries reconcile the
-loaded table before business-analysis queries and Tableau-facing views are run.
-
-## Tools
-
-- **Python:** pandas, NumPy, Jupyter
-- **Database:** MySQL
-- **Visualization:** Tableau
-- **Supporting tools:** Excel, Git, GitHub
-
-## Repository structure
-
-```text
-UK_Retail_Sales_Customer_Analytics/
-├── data/
-│   ├── raw/                  # Original source workbook (Git-ignored)
-│   ├── processed/            # Cleaned and analytical outputs (Git-ignored)
-│   └── reference/            # Supporting reference data
-├── docs/
-│   ├── architecture/
-│   ├── business_requirements/
-│   └── data_dictionary/
-├── images/                   # Portfolio screenshots
-├── python/
-│   ├── notebooks/            # Profiling, cleaning, and EDA notebooks
-│   └── scripts/              # Reusable cleaning and MySQL loading scripts
-├── sql/
-│   ├── 01_schema/
-│   ├── 02_cleaning/
-│   ├── 03_analysis/
-│   └── 04_views/
-├── tableau/
-│   ├── workbook/             # Tableau workbook
-│   └── exports/              # Dashboard exports
-├── .env.example
-├── requirements.txt
-└── README.md
-```
-
-## Data source
-
-The project uses the [UCI Online Retail II dataset](https://archive.ics.uci.edu/dataset/502/online+retail+ii),
-which contains 1,067,371 transaction records from a UK-based non-store retailer
-between December 2009 and December 2011.
-
-The raw workbook is deliberately excluded from Git to keep the repository small
-and preserve a clear raw-data boundary. Download `online_retail_II.xlsx` from UCI
-and place it in `data/raw/` to reproduce the project.
-
-## Methodology
-
-1. Profiled both workbook sheets without altering the source.
-2. Combined the yearly sheets and retained source-sheet lineage.
-3. Inspected missing values, duplicates, cancellations, returns, descriptions,
-   quantities, and prices.
-4. Created separate cleaned sales, customer sales, cancellation, and MySQL-ready
-   datasets.
-5. Reconciled Python KPIs and generated reusable analytical CSV outputs.
-6. Used MySQL queries for validation and business analysis.
-7. Built a Tableau dashboard covering KPIs, trends, products, customers,
-   geography, time patterns, and cancellations.
-
-Detailed assumptions and initial quality findings are documented in the
-[data dictionary](docs/data_dictionary/data_dictionary.md). A concise executive
-interpretation is available in the [project summary and business insights](docs/project_summary.md).
-
-## Reproduce the analysis
+Review the dashboard, notebook outputs and SQL directly on GitHub without a database. To rebuild, use Python 3, MySQL and Tableau Desktop/Public and work from the repository root:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+python -m venv .venv
+# Activate .venv for your shell, then:
+python -m pip install -r requirements.txt
 ```
 
-Then:
+1. Download `online_retail_II.xlsx` from [UCI Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii) into `data/raw/`. Raw and processed files are excluded from Git.
+2. Open the three notebooks in numeric order. Review their source paths and set the project root to your clone; retained outputs contain paths from the original workstation.
+3. Use the notebooks to create the cleaned and MySQL-ready exports. Copy `.env.example` to `.env` and configure your local database. Keep credentials out of Git.
+4. For a fresh database, execute `sql/01_schema/001_create_schema.sql`. Load the notebook's `cleaned_sales_mysql.csv` using `python python/scripts/load_to_mysql.py`, with `PROCESSED_CSV_PATH` matching your export. The loader appends rows: do not repeat it against an already loaded table without a deliberate reload plan.
+5. Execute the validation, analysis and reporting-view SQL in numeric folder order.
+6. Open the [Tableau workbook](tableau/workbook/uk_retail_sales_customer_analytics_dashboard.twb) and replace its original data connection with your local MySQL views or the matching curated files.
 
-1. Download the UCI workbook to `data/raw/online_retail_II.xlsx`.
-2. Run the notebooks in order:
-   - `python/notebooks/01_data_profiling.ipynb`
-   - `python/notebooks/02_data_cleaning.ipynb`
-   - `python/notebooks/03_exploratory_data_analysis.ipynb`
-3. Copy `.env.example` to `.env` and configure the local MySQL connection.
-4. Run the SQL files in numeric folder order.
-5. Open `tableau/workbook/uk_retail_sales_customer_analytics_dashboard.twb`
-   and update the data connection if required.
+The standalone cleaning helper uses a different column convention from the notebook-based loader. Follow the notebook export route above; the portfolio review did not change or rerun the project code.
 
-Do not commit `.env`, passwords, raw data, processed data, or Tableau extracts.
+## Validation and limitations
 
-## Dashboard
+- **Open reconciliation item:** the screenshot shows 40,077 orders while Python records 40,079. The £20.91M revenue and 5,878-customer headlines agree at displayed precision. A fresh source-to-Tableau reconciliation is needed before claiming exact cross-tool agreement.
+- Source transactions cover December 2009–December 2011. These are historical methods and findings, not current market intelligence.
+- Missing customer IDs, negative quantities and cancellation conventions affect analytical populations. Aggregate sales and customer analysis have different coverage.
+- The TWB is an editable connection definition, not a packaged extract. A fresh clone requires source data and a local connection to refresh it.
+- No new pipeline run, live Tableau refresh or realized business improvement is claimed by this documentation review.
 
-The Tableau workbook is available in `tableau/workbook/`, and the portfolio
-image is available in `tableau/exports/` and `images/`. If the dashboard is
-published to Tableau Public, add its public URL here.
+## Source and reuse
 
-## Limitations
-
-- Customer IDs are missing for a meaningful portion of the raw data.
-- Cancellation codes and negative quantities require careful interpretation.
-- The dataset ends in December 2011, so findings demonstrate analytical method
-  rather than current retail conditions.
-- Several non-product descriptions, such as manual adjustments and postage,
-  appear in transaction-level product rankings and should be separated for
-  merchandising-specific analysis.
-
-## License and attribution
-
-Project code and documentation are released under the [MIT License](LICENSE).
-The dataset is provided by the UCI Machine Learning Repository and is licensed
-separately under CC BY 4.0. Cite: Chen, D. (2012), *Online Retail II*.
+[UCI Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii), Chen, D. (2012), provides the historical source data under CC BY 4.0. Project code and documentation use the [MIT License](LICENSE); source data retains its separate terms.

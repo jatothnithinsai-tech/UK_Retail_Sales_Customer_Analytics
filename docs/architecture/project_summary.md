@@ -20,6 +20,8 @@ customers, products, geography, purchasing times, and cancellations.
 | Cancelled orders | 8,292 |
 | Cancellation rate | 17.14% |
 
+**Reconciliation note (27 October 2026):** these are the retained Python/documentation results. The saved Tableau dashboard shows 40,077 orders, two fewer than the notebook's 40,079. The difference has not been resolved by a fresh source-to-dashboard run. Revenue and customer headlines agree at displayed precision; exact cross-tool agreement is not claimed.
+
 ## Business insights
 
 1. **Sales are strongly seasonal.** November produced the highest revenue in
