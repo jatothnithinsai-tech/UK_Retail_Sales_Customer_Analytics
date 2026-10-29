@@ -1,4 +1,8 @@
 .DS_Store
+
+# Tableau recovery files and incomplete generated extracts
+*.twbr
+*.pending.hyper
 data/raw/
 data/processed/
 *.csv

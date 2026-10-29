@@ -1,0 +1,215 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-29T22:58:20.991700+00:00",
+  "source": {
+    "name": "online_retail_II.xlsx",
+    "sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
+    "raw_rows": 1067371,
+    "raw_sheet_rows": {
+      "Year 2009-2010": 525461,
+      "Year 2010-2011": 541910
+    },
+    "duplicate_rows_removed": 12133,
+    "cleaning_contract": "Exactly the original notebook: source-sheet column before deduplication; cancellations separated; positive quantity/price and nonmissing description; anonymous sales retained; customer analysis requires customer ID.",
+    "date_min": "2009-12-01 07:45:00",
+    "date_max": "2011-12-09 12:50:00"
+  },
+  "kpis": {
+    "sales_rows": 1029609,
+    "orders": 40077,
+    "revenue_gbp": 20913891.47,
+    "identified_customers": 5878,
+    "units": 11385368,
+    "aov_gbp": 521.84
+  },
+  "reconciliation": [
+    "Pandas from unchanged original XLSX",
+    "Independent SQLite SQL aggregates",
+    "Tableau Hyper SQL aggregates",
+    "Actual Tableau Desktop Public Edition dashboard display"
+  ],
+  "native_application": "Tableau Desktop Public Edition 2026.3.0 (20263.26.1022.1645)",
+  "native_workbook_open": "PASS; credential-free local Hyper extract; no Tableau Public upload",
+  "preview": {
+    "method": "Actual Tableau presentation window captured with Windows PrintWindow; exact pixel crop of the 1600 x 900 canvas",
+    "full_capture_sha256": "80f1c4295c4d74faf194b21f864a34ad158a08226012d84f1d50d45961e80aa8",
+    "full_capture_size": [
+      1920,
+      1080
+    ],
+    "crop_box": [
+      160,
+      75,
+      1760,
+      975
+    ],
+    "path": "images/uk_retail_dashboard_redesigned.png",
+    "sha256": "bee39a68018a917b3de0dde128e8bcd8311793960b7696b8f11b449b07ddd56d",
+    "native_export_command": "Worksheet Export was disabled for the active dashboard in Public Edition; this is an actual window capture, not an image export or mockup."
+  },
+  "native_filter_test": {
+    "original_rule": "Top 10 by SUM(Revenue) on Description",
+    "initial_marks": 10,
+    "test_top_n": 5,
+    "result_marks": 5,
+    "test_displayed_revenue_sum_gbp": 1442121,
+    "restored_top_n": 10,
+    "restored_marks": 10,
+    "restored_displayed_revenue_sum_gbp": 2124289,
+    "source_sql_top5_gbp": 1442121.41,
+    "source_sql_top10_gbp": 2124289.15,
+    "changes_saved_to_workbook": false
+  },
+  "native_mark_selection": {
+    "selected_marks": 1,
+    "population_marks": 10,
+    "displayed_revenue_gbp": 344069,
+    "source_revenue_gbp": 344069.3,
+    "selection_cleared_for_final_capture": true
+  },
+  "top_products": [
+    [
+      "REGENCY CAKESTAND 3 TIER",
+      344069.3
+    ],
+    [
+      "Manual",
+      340342.68
+    ],
+    [
+      "DOTCOM POSTAGE",
+      322657.48
+    ],
+    [
+      "WHITE HANGING HEART T-LIGHT HOLDER",
+      266582.35
+    ],
+    [
+      "PAPER CRAFT , LITTLE BIRDIE",
+      168469.6
+    ],
+    [
+      "JUMBO BAG RED RETROSPOT",
+      150640.27
+    ],
+    [
+      "PARTY BUNTING",
+      149109.35
+    ],
+    [
+      "ASSORTED COLOUR BIRD ORNAMENT",
+      131817.81
+    ],
+    [
+      "POSTAGE",
+      127597.42
+    ],
+    [
+      "PAPER CHAIN KIT 50'S CHRISTMAS ",
+      123002.89
+    ]
+  ],
+  "top_identified_customers": [
+    [
+      18102,
+      608821.65
+    ],
+    [
+      14646,
+      528602.52
+    ],
+    [
+      14156,
+      313759.82
+    ],
+    [
+      14911,
+      295832.39
+    ],
+    [
+      17450,
+      246813.09
+    ],
+    [
+      13694,
+      196482.81
+    ],
+    [
+      17511,
+      175603.55
+    ],
+    [
+      16446,
+      168472.5
+    ],
+    [
+      16684,
+      147142.77
+    ],
+    [
+      12415,
+      144458.37
+    ]
+  ],
+  "preservation": {
+    "original_AOV_formula": "SUM([revenue]) / COUNTD([invoice_no])",
+    "business_worksheets": 11,
+    "calculation_expressions_preserved": true,
+    "analytical_shelves_encodings_filters_preserved": true,
+    "removed_unused_sources": [
+      "Mac clipboard datasource used only by empty Sheet 12"
+    ],
+    "removed_empty_worksheets": [
+      "Sheet 12"
+    ],
+    "replaced_source": "MySQL credential connection replaced with reconciled local CSV/Hyper",
+    "stale_thumbnail_metadata_removed": true,
+    "business_worksheet_query_checks": [
+      " Revenue by Country",
+      "Average Order Value",
+      "Monthly Revenue Trend",
+      "Orders by Country",
+      "Sales by Day",
+      "Top 10 Customers by Revenue",
+      "Top 10 Products",
+      "Total Customers",
+      "Total Orders",
+      "Total Revenue",
+      "Total Units "
+    ]
+  },
+  "historical_notebook": "Retained outputs of 40,079 orders and GBP 521.82 AOV are not reproduced from this source and its recorded cleaning rules. Fresh 40,077 / GBP 521.84 totals match Tableau. No cause is asserted and historical outputs were not rewritten.",
+  "limits": [
+    "Only 2010 is a complete calendar year; December 2011 ends on the 9th.",
+    "Calendar-month chart pools years; use year-month source analysis for chronology.",
+    "Country charts retain all countries and require scrolling.",
+    "No global date/country dashboard filter or cross-filter/drillthrough action existed in the original workbook; none is claimed.",
+    "Complete tooltip usability, every country scroll position, phone layout and live MySQL refresh were not tested.",
+    "Sales include anonymous customers; customer rankings and distinct customer counts require a customer ID."
+  ],
+  "data_licence": "UCI Online Retail II, Chen (2012), DOI 10.24432/C5CG6D; CC BY 4.0. See DATA_LICENCE.md.",
+  "artifacts": {
+    "tableau/workbook/uk_retail_sales_customer_analytics_dashboard.twb": "a5f26f553f5f22e3ad9be68cbe86e8c3d6f2e0dbafee7740ed66bafe6a460647",
+    "tableau/workbook/uk_retail_sales_customer_analytics_dashboard.twbx": "cc9353ec44cb530e55854e5d4ea22e98a1b343e32eb26caeae11c01e1e624472",
+    "tableau/extracts/sales_clean.hyper": "19c42d788bac85d883f7c70d9dc9decf26e2d8130e624cb1f4d9f0a719184c2b"
+  },
+  "publishable_rebuild": {
+    "status": "PASS",
+    "raw_source_sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
+    "raw_rows": 1067371,
+    "duplicates_removed": 12133,
+    "kpis": {
+      "sales_rows": 1029609,
+      "orders": 40077,
+      "revenue_gbp": 20913891.47,
+      "identified_customers": 5878,
+      "units": 11385368,
+      "aov_gbp": 521.84
+    },
+    "csv_sha256": "1903b585c289f06e86ad1536faa681af1021393c2123636bffc35db05af911e6",
+    "scope": "Positive sales; anonymous sales retained; identified customers exclude missing IDs.",
+    "separate_output_folder": true,
+    "fresh_CSV_byte_identical_to_validated_source": true
+  },
+  "native_final_release_open": "PASS: exact prepared public TWBX opened in Tableau; no connection/error dialog."
+}
